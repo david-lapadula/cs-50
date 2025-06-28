@@ -5,6 +5,10 @@
 
 const readline = require('readline');
 
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 function isPositiveNumber(value) {
     const num = Number(value);
@@ -13,12 +17,6 @@ function isPositiveNumber(value) {
     }
     return null;
 }
-
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 
 function promptChange() {
     rl.question("Change owed: ", function (height) {

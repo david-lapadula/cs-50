@@ -9,7 +9,6 @@
 
 const readline = require('readline');
 
-
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -17,7 +16,22 @@ const rl = readline.createInterface({
 
 function promptNumber() {
     rl.question("Input card number: ", function (cardNumber) {
+        
+        let ccType = getCCType(cardNumber);
+        if (!ccType) {
+            console.log("Please enter a VISA, MASTERCARD, or AMEX card number.");
+            promptChange();
+            return;
+        }
+
         let isValidNumber = isValidCCNumber(cardNumber);
+        if (!isValidNumber) {
+            console.log("That is not a valid credit card number.");
+            promptChange();
+            return;
+        }
+
+        console.log("Valid credit card number.");
         rl.close();
     });
 }
@@ -65,18 +79,6 @@ function getCCType(cardNumber) {
     return undefined;
 }
 
-
-console.log(isValidCCNumber("4003600000000014"));
-console.log(isValidCCNumber("5555555555554444"));
-console.log(isValidCCNumber("378282246310005"));
-
-console.log('----------------------------------------------');
-
-console.log(isValidCCNumber("4111111111111112"));
-console.log(isValidCCNumber("5555555555554445"));
-console.log(isValidCCNumber("378282246310006"));
-
-
-// promptNumber();
+promptNumber();
 
 

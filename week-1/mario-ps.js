@@ -21,6 +21,15 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+function isPositiveNumber(value) {
+  const num = Number(value);
+  if (typeof num === 'number' && isFinite(num) && num > 0) {
+    return num;
+  }
+  return null;
+}
+
+
 function promptHeight() {
   rl.question("Select a height for your pyramid? ", function(height) {
     const validHeight = isPositiveNumber(height);
@@ -72,14 +81,5 @@ function rightAlignedPyramid(height) {
     console.log(line);
   }
 }
-
-function isPositiveNumber(value) {
-  const num = Number(value);
-  if (typeof num === 'number' && isFinite(num) && num > 0) {
-    return num;
-  }
-  return null;
-}
-
 promptHeight();
 
