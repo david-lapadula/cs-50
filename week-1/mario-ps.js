@@ -15,20 +15,12 @@ Hard Version
  */
 
 const readline = require('readline');
+const isPositiveNumber = require('../helpers')
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
-function isPositiveNumber(value) {
-  const num = Number(value);
-  if (typeof num === 'number' && isFinite(num) && num > 0) {
-    return num;
-  }
-  return null;
-}
-
 
 function promptHeight() {
   rl.question("Select a height for your pyramid? ", function(height) {
