@@ -6,4 +6,6 @@ function isPositiveNumber(value) {
     return null;
 }
 
-module.exports = isPositiveNumber;
+module.exports = {
+    isPositiveNumber
+};

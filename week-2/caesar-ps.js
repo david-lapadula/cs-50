@@ -12,7 +12,7 @@
 
 
 const readline = require('readline');
-const isPositiveNumber = require('../helpers')
+const isPositiveNumber = require('../helpers');
 
 const rl = readline.createInterface({
     input: process.stdin,
