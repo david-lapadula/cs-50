@@ -75,7 +75,7 @@ function getTopScorers(scoring) {
     ).list;
 }
 
-async function runElection() {
+async function runPluralityElection() {
     const candidates = await promptUntilValid(
         "Enter between 1 and 9 unique candidate names (space-separated): ",
         validateCandidates
@@ -110,4 +110,4 @@ async function runElection() {
     rl.close();
 }
 
-runElection();
+runPluralityElection();
