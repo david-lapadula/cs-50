@@ -47,12 +47,6 @@ function validateCandidates(input) {
     return candidates;
 }
 
-function createVoteCount(voterCount) {
-    return Object.fromEntries(
-        Array.from({ length: voterCount }, (_, i) => [i + 1, 0])
-    );
-}
-
 function validateVoterAmount(input) {
     const number = Number(input);
 
@@ -102,64 +96,7 @@ async function collectVotes(voterCount, candidates) {
     return rankedVote;
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function calculateWinner(voterCount, rankedVote) {
-    let halfTotalVotes = Math.ceil(voterCount / 2);
-    let voteTotal = Object.fromEntries(
-        Array.from(rankedVote[0], name => [name, 0])
-    );
-    let eliminated = [];
-    let winner;
-    let i = 0;
-
-    while (i < rankedVote.length) {
-        let ballot = rankedVote[i];
-        let j = 0;
-        let topVote;
-
-        while (j < ballot.length) {
-            if (!eliminated.includes(ballot[j])) {
-                topVote = ballot[j];
-                break;
-            }
-            j++;
-        }
-
-        voteTotal[topVote]++;
-
-        if (i === rankedVote.length - 1) {
-            const sorted = Object.entries(voteTotal)
-                .sort((a, b) => b[1] - a[1]);
-
-            const topScore = sorted[0][1];
-
-            if (topScore >= halfTotalVotes) {
-                winner = sorted[0][0];
-                break;
-            } else {
-                const lowestScore = sorted[sorted.length - 1][0];
-                eliminated.push(lowestScore);
-                const indexOfLowest = rankedVote[0].indexOf(lowestScore);
-                const newArr = [...rankedVote[0].slice(0, indexOfLowest), ...rankedVote[0].slice(indexOfLowest + 1)];
-                voteTotal = Object.fromEntries(
-                    Array.from(newArr, name => [name, 0])
-                );
-                i = 0;
-            }
-
-        } else {
-            i++;
-        }
-
-    }
-
-    return winner;
-};
-
-function calculateWinner1(ballots) {
+function calculateWinner(ballots) {
     let candidates = new Set(ballots[0]); // initial candidates
     const majority = Math.ceil(ballots.length / 2);
 
@@ -215,28 +152,4 @@ async function runRunoffElection() {
 
 
 
-let winner = calculateWinner(7, [
-    ['alice', 'bob', 'carol'],
-    ['alice', 'carol', 'bob'],
-    ['alice', 'carol', 'bob'],
-    ['bob', 'alice', 'carol'],
-    ['bob', 'alice', 'carol'],
-    ['bob', 'alice', 'carol'],
-    ['carol', 'alice', 'carol'],
-]
-);
-
-let winner2 = calculateWinner1([
-    ['alice', 'bob', 'carol'],
-    ['alice', 'carol', 'bob'],
-    ['alice', 'carol', 'bob'],
-    ['bob', 'alice', 'carol'],
-    ['bob', 'alice', 'carol'],
-    ['carol', 'alice', 'carol'],
-    ['carol', 'alice', 'carol'],
-]
-)
-
-console.log("winner:" + winner2);
-
-// runRunoffElection();
+runRunoffElection();
